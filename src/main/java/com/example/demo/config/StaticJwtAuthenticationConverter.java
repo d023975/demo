@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.core.convert.converter.Converter;
 
+
 public class StaticJwtAuthenticationConverter extends TokenAuthenticationConverter {
 
 
@@ -17,6 +18,7 @@ public class StaticJwtAuthenticationConverter extends TokenAuthenticationConvert
     }
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
+
         return super.convert(jwt);
 
     }

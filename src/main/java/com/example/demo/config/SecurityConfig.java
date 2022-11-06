@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.sap.cloud.security.xsuaa.token.authentication.XsuaaJwtDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import com.sap.cloud.security.xsuaa.XsuaaServiceConfiguration;
 import com.sap.cloud.security.xsuaa.token.TokenAuthenticationConverter;
+import com.sap.cloud.security.xsuaa.token.authentication.XsuaaJwtDecoderBuilder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 
 @Configuration
 @EnableWebSecurity
@@ -36,8 +37,12 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
                 .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer()
-                .jwt()
+                .jwt().decoder(jwtDecoder(xsuaaServiceConfiguration))
                 .jwtAuthenticationConverter(getJwtAuthenticationConverter());
+    }
+
+    private JwtDecoder jwtDecoder(XsuaaServiceConfiguration xsuaaServiceConfiguration) {
+        return new CustJwtDecoder(xsuaaServiceConfiguration);
     }
 
     Converter<Jwt, AbstractAuthenticationToken> getJwtAuthenticationConverter(){
@@ -46,16 +51,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
         return converter;
     }
 
-    @Bean
+/*    @Bean
     StaticJwtAuthenticationProvider staticJwtAuthenticationProvider() {
         return new StaticJwtAuthenticationProvider(new StaticJwtAuthenticationConverter(xsuaaServiceConfiguration));
-    }
+    }*/
 
 
-    @Override
+/*    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(staticJwtAuthenticationProvider());
-    }
+    }*/
 
 
 }
