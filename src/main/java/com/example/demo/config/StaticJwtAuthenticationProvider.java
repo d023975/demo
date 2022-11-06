@@ -1,11 +1,13 @@
 package com.example.demo.config;
 
+import com.nimbusds.jwt.JWT;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -19,11 +21,19 @@ public class StaticJwtAuthenticationProvider implements AuthenticationProvider {
         this.converter = converter;
     }
 
+    public JwtDecoder jwtDecoder() {
+ /*       SecretKeySpec key = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        return NimbusJwtDecoder.withSecretKey(key).build();*/
+        return null;
+    }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         BearerTokenAuthenticationToken bearer = (BearerTokenAuthenticationToken) authentication;
         try {
+
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
 
         } catch (JwtException failed) {

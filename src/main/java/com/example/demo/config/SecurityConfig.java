@@ -2,8 +2,10 @@ package com.example.demo.config;
 
 import com.sap.cloud.security.xsuaa.token.authentication.XsuaaJwtDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,6 +44,17 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
         TokenAuthenticationConverter converter = new StaticJwtAuthenticationConverter(xsuaaServiceConfiguration);
         converter.setLocalScopeAsAuthorities(true);
         return converter;
+    }
+
+    @Bean
+    StaticJwtAuthenticationProvider staticJwtAuthenticationProvider() {
+        return new StaticJwtAuthenticationProvider(new StaticJwtAuthenticationConverter(xsuaaServiceConfiguration));
+    }
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(staticJwtAuthenticationProvider());
     }
 
 
