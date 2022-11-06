@@ -1,0 +1,18 @@
+---
+applications:
+  - name: sap-test-security
+    path: target/demo-0.0.1-SNAPSHOT.jar
+    memory: 2048MB
+    buildpacks:
+      - sap_java_buildpack
+    instances: 2
+    timeout: 180
+    services:
+      - connectivity-papm-lite
+      - destination-papm-lite
+      - xsuaa-papm-broker
+    env:
+      xsuaa_connectivity_instance_name: "xsuaa-papm-broker"
+      connectivity_instance_name: "connectivity-papm-lite"
+      destination_instance_name: "destination-papm-lite"
+      SPRING_PROFILES_ACTIVE: cloud
