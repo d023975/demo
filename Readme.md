@@ -8,4 +8,4 @@ https://www.javadevjournal.com/spring-security/spring-security-custom-authentica
 
 https://bytemeta.vip/repo/SAP/cloud-security-xsuaa-integration/issues/649
 
-# https://danielblancocuadrado.medium.com/authentication-with-spring-boot-and-jwt-2cb43ed0b6ef
+https://danielblancocuadrado.medium.com/authentication-with-spring-boot-and-jwt-2cb43ed0b6ef
