@@ -26,7 +26,6 @@ cf ssh <app_name> -i 1 -c 'export JAVA_PID=`ps -C java -o pid=` && app/META-INF/
 https://docs.cloudfoundry.org/buildpacks/java/java-tips.html#debugging
 
 NODE:
-  - 
 
 Create SSH Tunnel:
 
