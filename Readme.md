@@ -9,3 +9,70 @@ https://www.javadevjournal.com/spring-security/spring-security-custom-authentica
 https://bytemeta.vip/repo/SAP/cloud-security-xsuaa-integration/issues/649
 
 https://danielblancocuadrado.medium.com/authentication-with-spring-boot-and-jwt-2cb43ed0b6ef
+
+Debug:
+ 
+ 
+ Enable Debug Port:
+ 
+ JAVA (Cloud Platform SAP BTP environemnt with sap java buildpack !!!)
+ 
+cf ssh <app_name> -c 'export JAVA_PID=`ps -C java -o pid=` && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c "set debugging port range fromPort=8000 toPort=8000" && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c "start debugging local=true"'
+
+cf ssh <app_name> -c "export JAVA_PID=`ps -C java -o pid=` && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c 'set debugging port range fromPort=8000 toPort=8000' && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c 'start debugging local=true'"
+
+cf ssh <app_name> -i 1 -c 'export JAVA_PID=`ps -C java -o pid=` && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c "set debugging port range fromPort=8000 toPort=8000" && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c "start debugging local=true"'
+
+https://docs.cloudfoundry.org/buildpacks/java/java-tips.html#debugging
+
+NODE:
+  - 
+
+Create SSH Tunnel:
+
+
+cf ssh <app_name> -N -T -L 8000:localhost:8000
+
+
+Connect the Debugger
+host (localhost)
+port (e.g. 8000) in the Connection Properties
+
+conditional breakpoints:
+create a condition like:
+
+(SAP BTP Platform)
+if (com.sap.xs2.security.container.SecurityContext.getUserInfo().getEmail().equals("hugo.nase@obiwan.com")) {
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Disable Debug Port:
+ 
+JAVA:
+
+cf ssh <app_name> -c 'export JAVA_PID=`ps -C java -o pid=` && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c "stop debugging"'
+
+cf ssh <app_name> -c "export JAVA_PID=`ps -C java -o pid=` && app/META-INF/.sap_java_buildpack/sapjvm/bin/jvmmon -pid $JAVA_PID -c 'stop debugging'"
+
+https://docs.cloudfoundry.org/buildpacks/java/java-tips.html#debugging
+
+
+NODE:
