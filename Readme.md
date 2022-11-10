@@ -31,6 +31,8 @@ Create SSH Tunnel:
 
 
 cf ssh <app_name> -N -T -L 8000:localhost:8000
+cf ssh -N -T -L <LOCAL_PORT>:localhost:<REMOTE_PORT> <APPLICATION_NAME>
+REMOTE_PORT should match the port configuration for the application 
 
 
 Connect the Debugger
@@ -45,23 +47,7 @@ if (com.sap.xs2.security.container.SecurityContext.getUserInfo().getEmail().equa
     return true;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 Disable Debug Port:
  
