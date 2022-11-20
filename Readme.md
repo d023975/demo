@@ -43,11 +43,10 @@ we can’t use this approach. Instead, we must code our own Converter class and 
 JwtAuthorizationConverter. This enhanced mapper, MappingJwtGrantedAuthoritiesConverter, 
 implements Converter<Jwt, Collection<GrantedAuthority>> and looks much like the original one:
 
+---------------------------------
 
-
-
-
-
+https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-decoder-builder
+https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-validation-custom
 
 
 

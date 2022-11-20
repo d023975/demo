@@ -76,6 +76,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 //SCOPE_sap-papm-cloud!b6733.run_rfc
                 //.antMatchers("/hello/**").hasAuthority("SCOPE_sap-papm-cloud!b6733.run_rfc")
+                //.antMatchers("/hello/**").hasAuthority("sap-papm-cloud!b6733.run_rfc")
                 .antMatchers("/hello/**").hasAuthority("run_rfc")
                 .anyRequest().denyAll()
                 .and().oauth2ResourceServer().jwt()

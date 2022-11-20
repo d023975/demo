@@ -1,7 +1,6 @@
 package com.example.demo.config;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.security.oauth2.jwt.*;
-import sun.jvm.hotspot.oops.Metadata;
+
 
 public class CustJwtDecoder2 implements JwtDecoder
 {
@@ -33,6 +32,8 @@ public class CustJwtDecoder2 implements JwtDecoder
 
                     .build();
                // NimbusJwtDecoder.withPublicKey()
+             //https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-validation-custom
+            //dec.setJwtValidator();
             Jwt jwt = dec.decode(token);
             return jwt;
 

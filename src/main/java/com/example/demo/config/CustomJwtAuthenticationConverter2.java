@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 import java.util.Collection;
+import java.util.List;
 
 
 public class CustomJwtAuthenticationConverter2 implements Converter<Jwt, AbstractAuthenticationToken> {
@@ -26,7 +27,15 @@ public class CustomJwtAuthenticationConverter2 implements Converter<Jwt, Abstrac
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
         Collection<GrantedAuthority> authorities = jwtGrantedAuthoritiesConverter.convert(jwt);
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        AbstractAuthenticationToken token2 = jwtAuthenticationConverter.convert(jwt);
+
+
         //String principalClaimValue = jwt.getClaimAsString(this.principalClaimName);
 
        for (GrantedAuthority auth : authorities) {
