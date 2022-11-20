@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+
 import com.sap.cloud.security.xsuaa.token.TokenAuthenticationConverter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -22,7 +23,7 @@ public class CustomJwtAuthenticationProvider2 implements AuthenticationProvider 
 
     private Converter<Jwt, ? extends AbstractAuthenticationToken> jwtAuthenticationConverter = new JwtAuthenticationConverter();
 
-    public CustomJwtAuthenticationProvider2(JwtDecoder jwtDecoder, TokenAuthenticationConverter converter) {
+    public CustomJwtAuthenticationProvider2(JwtDecoder jwtDecoder, CustomJwtAuthenticationConverter2 converter) {
         Assert.notNull(jwtDecoder, "jwtDecoder cannot be null");
         this.jwtDecoder = jwtDecoder;
         this.jwtAuthenticationConverter = converter;

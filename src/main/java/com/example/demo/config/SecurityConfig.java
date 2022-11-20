@@ -74,6 +74,8 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                //SCOPE_sap-papm-cloud!b6733.run_rfc
+                //.antMatchers("/hello/**").hasAuthority("SCOPE_sap-papm-cloud!b6733.run_rfc")
                 .antMatchers("/hello/**").hasAuthority("run_rfc")
                 .anyRequest().denyAll()
                 .and().oauth2ResourceServer().jwt()
@@ -96,9 +98,9 @@ public class SecurityConfig {
         return converter;
     }
 
-    Converter<Jwt, AbstractAuthenticationToken> getJwtAuthenticationConverter2() {
-        TokenAuthenticationConverter converter = new CustomJwtAuthenticationConverter2(xsuaaServiceConfiguration);
-        converter.setLocalScopeAsAuthorities(true);
+    CustomJwtAuthenticationConverter2 getJwtAuthenticationConverter2() {
+        CustomJwtAuthenticationConverter2 converter = new CustomJwtAuthenticationConverter2();
+
         return converter;
     }
 
@@ -107,7 +109,7 @@ public class SecurityConfig {
         return new CustomJwtAuthenticationProvider(jwtDecoder(xsuaaServiceConfiguration), (TokenAuthenticationConverter) getJwtAuthenticationConverter());
     }
     CustomJwtAuthenticationProvider2 customJwtAuthenticationProvider2() {
-        return new CustomJwtAuthenticationProvider2(jwtDecoder2() , (TokenAuthenticationConverter) getJwtAuthenticationConverter2());
+        return new CustomJwtAuthenticationProvider2(jwtDecoder2() ,  getJwtAuthenticationConverter2());
     }
 
     // Used by spring security if CORS is enabled.
@@ -128,8 +130,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 
 
 
