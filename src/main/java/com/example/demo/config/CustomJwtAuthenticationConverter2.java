@@ -47,11 +47,8 @@ public class CustomJwtAuthenticationConverter2 implements Converter<Jwt, Abstrac
         AbstractAuthenticationToken token =  new JwtAuthenticationToken(jwt, authorities);
         //AbstractAuthenticationToken token =  this.jwtAuthenticationConverter.convert(jwt);
 
-
         return token;
-
     }
-
 }
 
 
