@@ -1,20 +1,17 @@
 package com.example.demo.config;
+
 import com.sap.cloud.security.xsuaa.XsuaaServiceConfiguration;
 import com.sap.cloud.security.xsuaa.token.authentication.XsuaaJwtDecoderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.*;
 
-public class CustJwtDecoder implements JwtDecoder
-{
+public class CustJwtDecoder implements JwtDecoder {
 
     @Autowired
     XsuaaServiceConfiguration xsuaaServiceConfiguration;
-    private JwtDecoder defaultDecoder;
+    private final JwtDecoder defaultDecoder;
 
-    public CustJwtDecoder(XsuaaServiceConfiguration xsuaaServiceConfiguration){
+    public CustJwtDecoder(XsuaaServiceConfiguration xsuaaServiceConfiguration) {
         this.defaultDecoder = new XsuaaJwtDecoderBuilder(xsuaaServiceConfiguration).build();
     }
 
@@ -22,14 +19,9 @@ public class CustJwtDecoder implements JwtDecoder
     public Jwt decode(String token) throws JwtException {
 
         try {
-           Jwt jwt = this.defaultDecoder.decode(token);
-           return jwt;
-        } catch (Exception exception) {
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx");
-            System.out.println(exception.getMessage());
-            System.out.println(exception.getStackTrace());
-
-            return null;
+            return this.defaultDecoder.decode(token);
+        } catch (Exception e) {
+            throw new BadJwtException(e.getMessage());
         }
 
     }

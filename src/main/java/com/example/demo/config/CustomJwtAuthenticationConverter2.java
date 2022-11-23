@@ -9,21 +9,17 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 import java.util.Collection;
-import java.util.List;
-
 
 public class CustomJwtAuthenticationConverter2 implements Converter<Jwt, AbstractAuthenticationToken> {
 
-    private JwtAuthenticationConverter jwtAuthenticationConverter;
-    public CustomJwtAuthenticationConverter2( ) {
+    public CustomJwtAuthenticationConverter2() {
 
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        //SCOPE_sap-papm-cloud!b6733.run_rfc
-        //jwtGrantedAuthoritiesConverter.setAuthorityPrefix("SCOPE_sap-papm-cloud!b6733.");
-        this.jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        this.jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
     }
+
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
@@ -33,21 +29,15 @@ public class CustomJwtAuthenticationConverter2 implements Converter<Jwt, Abstrac
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-        AbstractAuthenticationToken token2 = jwtAuthenticationConverter.convert(jwt);
 
 
-        //String principalClaimValue = jwt.getClaimAsString(this.principalClaimName);
-
-       for (GrantedAuthority auth : authorities) {
+        for (GrantedAuthority auth : authorities) {
             auth.getAuthority();
         }
 
-
-
-        AbstractAuthenticationToken token =  new JwtAuthenticationToken(jwt, authorities);
         //AbstractAuthenticationToken token =  this.jwtAuthenticationConverter.convert(jwt);
 
-        return token;
+        return new JwtAuthenticationToken(jwt, authorities);
     }
 }
 

@@ -35,23 +35,23 @@ public class CustomJwtAuthenticationProvider implements AuthenticationProvider {
         AbstractAuthenticationToken token = this.jwtAuthenticationConverter.convert(jwt);
         try {
             token.setDetails(bearer.getDetails());
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
 
         return token;
     }
+
     private Jwt getJwt(BearerTokenAuthenticationToken bearer) {
         try {
             return this.jwtDecoder.decode(bearer.getToken());
-        }
-        catch (BadJwtException failed) {
+        } catch (BadJwtException failed) {
             throw new InvalidBearerTokenException(failed.getMessage(), failed);
-        }
-        catch (JwtException failed) {
+        } catch (JwtException failed) {
             throw new AuthenticationServiceException(failed.getMessage(), failed);
         }
     }
+
     @Override
     public boolean supports(Class<?> authentication) {
         return BearerTokenAuthenticationToken.class.isAssignableFrom(authentication);
