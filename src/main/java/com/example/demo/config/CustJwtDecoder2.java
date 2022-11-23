@@ -9,8 +9,6 @@ import java.util.Collections;
 public class CustJwtDecoder2 implements JwtDecoder {
 
 
-    private JwtDecoder defaultDecoder;
-
     public CustJwtDecoder2() {
 
     }
@@ -18,7 +16,7 @@ public class CustJwtDecoder2 implements JwtDecoder {
     public CustJwtDecoder2(String issuerUri) {
         // Calling JwtDecoders#fromIssuerLocation is what invokes the Provider Configuration or Authorization
         // Server Metadata endpoint in order to derive the JWK Set Uri.
-        this.defaultDecoder = JwtDecoders.fromIssuerLocation(issuerUri);
+        JwtDecoder defaultDecoder = JwtDecoders.fromIssuerLocation(issuerUri);
 
     }
 
@@ -38,15 +36,14 @@ public class CustJwtDecoder2 implements JwtDecoder {
         //https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-validation-custom
         //dec.setJwtValidator();
         //------------------------------------------------------------------
-        ArrayList<String> al = new ArrayList<String>();
+        ArrayList<String> al = new ArrayList<>();
         al.add("run_rfc");
         MappedJwtClaimSetConverter converter = MappedJwtClaimSetConverter
                 .withDefaults(Collections.singletonMap("authorities", authorities -> al));
 
         dec.setClaimSetConverter(converter);
 
-        Jwt jwt = dec.decode(token);
-        return jwt;
+        return dec.decode(token);
 
     }
 }

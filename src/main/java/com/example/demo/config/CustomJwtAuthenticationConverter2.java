@@ -9,18 +9,15 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 import java.util.Collection;
-import java.util.List;
 
 public class CustomJwtAuthenticationConverter2 implements Converter<Jwt, AbstractAuthenticationToken> {
-
-    private JwtAuthenticationConverter jwtAuthenticationConverter;
 
     public CustomJwtAuthenticationConverter2() {
 
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 
-        this.jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        this.jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
     }
 
     @Override
@@ -32,17 +29,15 @@ public class CustomJwtAuthenticationConverter2 implements Converter<Jwt, Abstrac
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-        AbstractAuthenticationToken token2 = jwtAuthenticationConverter.convert(jwt);
 
 
         for (GrantedAuthority auth : authorities) {
             auth.getAuthority();
         }
 
-        AbstractAuthenticationToken token = new JwtAuthenticationToken(jwt, authorities);
         //AbstractAuthenticationToken token =  this.jwtAuthenticationConverter.convert(jwt);
 
-        return token;
+        return new JwtAuthenticationToken(jwt, authorities);
     }
 }
 

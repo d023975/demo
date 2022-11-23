@@ -29,9 +29,8 @@ public class SecurityConfig {
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(customJwtAuthenticationProvider());
         authenticationManagerBuilder.authenticationProvider(customJwtAuthenticationProvider2());
-        AuthenticationManager authManger = authenticationManagerBuilder.build();
 
-        return authManger;
+        return authenticationManagerBuilder.build();
     }
 
     @Bean
@@ -74,9 +73,8 @@ public class SecurityConfig {
     }
 
     CustomJwtAuthenticationConverter2 getJwtAuthenticationConverter2() {
-        CustomJwtAuthenticationConverter2 converter = new CustomJwtAuthenticationConverter2();
 
-        return converter;
+        return new CustomJwtAuthenticationConverter2();
     }
 
 

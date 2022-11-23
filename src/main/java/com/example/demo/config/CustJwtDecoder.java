@@ -9,7 +9,7 @@ public class CustJwtDecoder implements JwtDecoder {
 
     @Autowired
     XsuaaServiceConfiguration xsuaaServiceConfiguration;
-    private JwtDecoder defaultDecoder;
+    private final JwtDecoder defaultDecoder;
 
     public CustJwtDecoder(XsuaaServiceConfiguration xsuaaServiceConfiguration) {
         this.defaultDecoder = new XsuaaJwtDecoderBuilder(xsuaaServiceConfiguration).build();
@@ -19,8 +19,7 @@ public class CustJwtDecoder implements JwtDecoder {
     public Jwt decode(String token) throws JwtException {
 
         try {
-            Jwt jwt = this.defaultDecoder.decode(token);
-            return jwt;
+            return this.defaultDecoder.decode(token);
         } catch (Exception e) {
             throw new BadJwtException(e.getMessage());
         }

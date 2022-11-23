@@ -20,9 +20,7 @@ public class CustomJwtAuthenticationConverter extends TokenAuthenticationConvert
     public AbstractAuthenticationToken convert(Jwt jwt) {
 
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        Collection<GrantedAuthority> authorities = jwtGrantedAuthoritiesConverter.convert(jwt);
-        AbstractAuthenticationToken token = super.convert(jwt);
-        return token;
+        return super.convert(jwt);
 
     }
 

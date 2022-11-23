@@ -2,15 +2,12 @@ package com.example.demo.config;
 
 
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.util.Assert;
@@ -19,7 +16,7 @@ public class CustomJwtAuthenticationProvider2 implements AuthenticationProvider 
 
     private final JwtDecoder jwtDecoder;
 
-    private Converter<Jwt, ? extends AbstractAuthenticationToken> jwtAuthenticationConverter = new JwtAuthenticationConverter();
+    private Converter<Jwt, ? extends AbstractAuthenticationToken> jwtAuthenticationConverter;
 
     public CustomJwtAuthenticationProvider2(JwtDecoder jwtDecoder, CustomJwtAuthenticationConverter2 converter) {
         Assert.notNull(jwtDecoder, "jwtDecoder cannot be null");
