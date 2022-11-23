@@ -1,19 +1,17 @@
 package com.example.demo.config;
 
 
-import com.sap.cloud.security.xsuaa.token.TokenAuthenticationConverter;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.jwt.BadJwtException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
-import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.util.Assert;
 
@@ -31,13 +29,11 @@ public class CustomJwtAuthenticationProvider2 implements AuthenticationProvider 
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        BearerTokenAuthenticationToken bearer = (BearerTokenAuthenticationToken) authentication;
-
-        Jwt jwt = getJwt(bearer);
-        AbstractAuthenticationToken token = this.jwtAuthenticationConverter.convert(jwt);
-        token.setDetails(bearer.getDetails());
-
-        return token;
+                BearerTokenAuthenticationToken bearer = (BearerTokenAuthenticationToken) authentication;
+                Jwt jwt = getJwt(bearer);
+                AbstractAuthenticationToken token = this.jwtAuthenticationConverter.convert(jwt);
+                token.setDetails(bearer.getDetails());
+                return token;
     }
 
     private Jwt getJwt(BearerTokenAuthenticationToken bearer) {
